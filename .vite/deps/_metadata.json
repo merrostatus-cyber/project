@@ -1,0 +1,32 @@
+{
+  "hash": "63e42cb7",
+  "configHash": "9fda4082",
+  "lockfileHash": "e3b0c442",
+  "browserHash": "7a60fa61",
+  "optimized": {
+    "react-dom/client": {
+      "src": "../../chatbot/node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "65d6d481",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../chatbot/node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "d93834dc",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../chatbot/node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "72cee6d6",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "react-DW0Z4HR0": {
+      "file": "react-DW0Z4HR0.js",
+      "isDynamicEntry": false
+    }
+  }
+}

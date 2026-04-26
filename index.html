@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitify - Your Personal Fitness Trainer</title>
+  <link rel="stylesheet" href="fitify.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1 id="appTitle">Fitify</h1>
+      </div>
+      <div class="controls">
+        <button id="darkModeToggle" class="btn btn-outline" title="Toggle dark mode">🌓</button>
+        <button id="languageToggle" class="btn btn-outline"><span class="lang-text">عربي</span></button>
+        <button id="refreshBtn" class="btn btn-outline">Refresh</button>
+        <button class="muscle-btn btn btn-outline" id="muscleWikiBtn" style="font-weight:700;">💪 Muscle Wiki</button>
+        <a href="chatbot/index.html" class="btn btn-outline" style="text-decoration:none;background:linear-gradient(90deg,#00e676,#448aff);color:#000;font-weight:700;border:none;">💬 AI Chat</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="motivation-quote">
+        <p class="quote-text" id="quoteText">The secret of getting ahead is getting started.</p>
+        <p class="quote-author" id="quoteAuthor">- Mark Twain</p>
+      </div>
+
+      <form id="fitnessForm" class="form-section" onsubmit="return false;">
+        <!-- Left Column: Personal info -->
+        <div>
+          <h3 style="margin-bottom:12px;color:var(--primary-blue);" id="personalInfoTitle">Personal Details</h3>
+          
+          <div class="form-group">
+            <label for="userName" id="userNameLabel">Name:</label>
+            <input type="text" id="userName" placeholder="e.g. John Doe" />
+          </div>
+          
+          <div class="form-group">
+            <label for="gender" id="genderLabel">Gender:</label>
+            <select id="gender" required>
+              <option value="male" id="maleOption">Male</option>
+              <option value="female" id="femaleOption">Female</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="weight" id="weightLabel">Weight (kg):</label>
+              <input type="number" id="weight" min="30" max="300" required />
+            </div>
+            <div class="form-group">
+              <label for="height" id="heightLabel">Height (cm):</label>
+              <input type="number" id="height" min="100" max="250" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age" id="ageLabel">Age:</label>
+              <input type="number" id="age" min="10" max="120" required />
+            </div>
+            <div class="form-group">
+              <label for="fitnessLevel" id="fitnessLevelLabel">Fitness Level:</label>
+              <select id="fitnessLevel" required>
+                <option value="beginner" id="optBeginner">Beginner</option>
+                <option value="intermediate" id="optIntermediate">Intermediate</option>
+                <option value="advanced" id="optAdvanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label id="activityLabel">Activity Level:</label>
+            <select id="activityLevel">
+              <option value="1.2" id="sedentaryOpt">Sedentary (little/no exercise)</option>
+              <option value="1.375" id="lightOpt">Light (1-3 days/week)</option>
+              <option value="1.55" id="moderateOpt">Moderate (3-5 days/week)</option>
+              <option value="1.725" id="activeOpt">Active (6-7 days/week)</option>
+              <option value="1.9" id="veryActiveOpt">Very Active (athlete/physical job)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right Column: Measurements & Condition -->
+        <div>
+          <h3 style="margin-bottom:12px;color:var(--primary-blue);" id="measurementsTitle">Body Measurements</h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label id="neckLabel">Neck (cm):</label>
+              <input type="number" id="neck" step="0.1" placeholder="Circumference" />
+            </div>
+            <div class="form-group">
+              <label id="waistLabel">Waist (cm):</label>
+              <input type="number" id="waist" step="0.1" placeholder="Circumference" />
+            </div>
+          </div>
+
+          <div class="form-group" id="hipGroup">
+            <label id="hipLabel">Hip (cm) - Female only:</label>
+            <input type="number" id="hip" step="0.1" placeholder="Circumference" />
+          </div>
+
+          <div class="form-group">
+            <label for="healthIssues" id="healthIssuesLabel">Health Conditions:</label>
+            <textarea id="healthIssues" placeholder="Any injuries or health concerns..."></textarea>
+          </div>
+
+          <div class="form-group button-group" style="margin-top:20px;">
+            <button type="button" id="calculateBtn" class="btn btn-large btn-blue"><span id="calculateText">Calculate Only</span></button>
+            <button type="button" id="exportPdfBtn" class="btn btn-large btn-action"><span id="exportText">📥 Download PDF</span></button>
+            <button type="button" id="generatePlanBtn" class="btn btn-large btn-action"><span id="generateText">Generate Plan</span></button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Premium Water Tracker -->
+      <div class="water-premium-card" id="waterTrackerWidget">
+        <h3 id="waterTitle" class="water-title">💧 Water Intake Tracker</h3>
+        <div class="water-tracker-layout">
+          <div class="circular-progress-wrapper">
+            <svg class="circular-progress" viewBox="0 0 120 120">
+              <circle class="bg" cx="60" cy="60" r="54"></circle>
+              <circle class="progress" id="waterCircleProgress" cx="60" cy="60" r="54"></circle>
+            </svg>
+            <div class="circular-content">
+              <span id="waterPercentage" class="water-percentage">0%</span>
+              <span id="waterStatus" class="water-status">0 / 2500 ml</span>
+            </div>
+          </div>
+          <div class="water-controls">
+            <p id="waterGoalTitle" style="font-size:12px; color:var(--text-dark); margin-bottom: 6px; font-weight:600;">Quick Add (ml)</p>
+            <div class="water-add-btns">
+              <button class="w-btn add" data-amount="250">+250</button>
+              <button class="w-btn add" data-amount="500">+500</button>
+              <button class="w-btn add" data-amount="750">+750</button>
+              <button class="w-btn add" data-amount="1000">+1000</button>
+            </div>
+            <div class="water-goal-settings" style="margin-top: 10px;">
+              <button class="w-btn remove" id="removeWaterBtn">-250 ml</button>
+              <div class="goal-input-wrapper">
+                <label for="dailyWaterGoal" id="waterGoalLabel" style="font-size:12px; font-weight:600; display:inline;">Goal (ml):</label>
+                <input type="number" id="dailyWaterGoal" value="2500" step="100" min="500" style="width:85px; padding:6px; display:inline; margin-left:6px;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Results Dashboard -->
+      <div id="results" class="results-section" style="display:none;">
+        <h2 id="resultsTitle" style="margin-bottom: 16px; color:var(--primary-blue);">Your Fitness Dashboard</h2>
+        
+        <table class="dashboard-table" id="dashboardTable">
+          <thead>
+            <tr>
+              <th id="thMetric">Metric</th>
+              <th id="thResult">Result</th>
+              <th id="thStatus">Status / Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="rowBmiTitle"><strong>BMI</strong></td>
+              <td id="resBmiValue" style="font-weight:700; font-size:1.1rem;">-</td>
+              <td><span id="resBmiStatus" class="badge badge-normal">-</span></td>
+            </tr>
+            <tr>
+              <td id="rowIdealWeightTitle"><strong>Ideal Weight</strong></td>
+              <td id="resIdealWeightValue" style="font-weight:700; font-size:1.1rem;">-</td>
+              <td id="resIdealWeightStatus">-</td>
+            </tr>
+            <tr>
+              <td id="rowBodyfatTitle"><strong>Body Fat %</strong></td>
+              <td id="resBodyfatValue" style="font-weight:700; font-size:1.1rem;">-</td>
+              <td><span id="resBodyfatStatus" class="badge badge-normal">-</span></td>
+            </tr>
+            <tr>
+              <td id="rowCaloriesTitle"><strong>TDEE (Daily Calories)</strong></td>
+              <td id="resCaloriesValue" style="font-weight:700; font-size:1.1rem;">-</td>
+              <td id="resCaloriesStatus" style="font-size:13px; line-height:1.4;">-</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="health-advice" id="healthAdvice" style="margin-top: 14px;"></div>
+      </div>
+
+      <div class="exercise-plan" id="exercisePlan">
+        <h2 id="exerciseTitle">Exercise Plan</h2>
+        <div class="exercise-grid" id="exercises"></div>
+      </div>
+
+      <div class="diet-plan" id="dietPlan">
+        <h2 id="dietTitle">Nutrition Plan</h2>
+        <div class="diet-tips" id="nutritionTips"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="feedback-form">
+        <h3 id="feedbackTitle">Your Feedback</h3>
+        <textarea id="feedbackInput" placeholder="Help us improve Fitify..."></textarea>
+        <button id="submitFeedback" class="btn btn-large btn-blue"><span id="submitText">Submit Feedback</span></button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Hidden PDF Report Template -->
+  <div id="pdfContainer" style="display:none;">
+    <div id="report">
+      <div id="pdfReportTemplate">
+      <div class="pdf-header">
+        <h1 class="pdf-brand">FITIFY</h1>
+        <h2 class="pdf-title">Personalized Functional Assessment</h2>
+      </div>
+      
+      <div class="pdf-meta">
+        <div class="pdf-meta-item"><strong>Client Name:</strong> <span id="pdfName"></span></div>
+        <div class="pdf-meta-item"><strong>Date:</strong> <span id="pdfDate"></span></div>
+      </div>
+
+      <div class="pdf-section">
+        <h3>Core Biometrics</h3>
+        <table class="pdf-table">
+          <tbody>
+            <tr>
+              <th>BMI Index</th>
+              <td id="pdfBmiValue" class="val-bold">--</td>
+              <td id="pdfBmiStatus" class="highlight-txt">--</td>
+            </tr>
+            <tr>
+              <th>Body Fat %</th>
+              <td id="pdfFatValue" class="val-bold">--</td>
+              <td id="pdfFatStatus" class="highlight-txt">--</td>
+            </tr>
+            <tr>
+              <th>Ideal Weight</th>
+              <td id="pdfIdealWeight" class="val-bold">--</td>
+              <td>Target Profile</td>
+            </tr>
+            <tr>
+              <th>Daily Energy Exp. (TDEE)</th>
+              <td id="pdfTdeeValue" class="val-bold">--</td>
+              <td>Caloric Baseline</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pdf-section">
+        <h3>Reported Measurements</h3>
+        <table class="pdf-table pdf-table-small">
+          <tbody>
+            <tr>
+              <th>Neck Circumference</th>
+              <td id="pdfNeck">--</td>
+            </tr>
+            <tr>
+              <th>Waist Circumference</th>
+              <td id="pdfWaist">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pdf-footer">
+        <strong>Fitify Premium Insights</strong><br>
+        Report generated via the AI Assessment Engine. This data is for informational purposes.
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="fitify.js"></script>
+<button onclick="generatePDF()" style="position:fixed;bottom:20px;right:20px;z-index:999;">Download PDF</button>
+</body>
+</html>

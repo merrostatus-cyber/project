@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/* ===== Custom Design Tokens ===== */
+@theme {
+  --color-dark-950: #06060a;
+  --color-dark-900: #0a0a12;
+  --color-dark-800: #0f0f1a;
+  --color-dark-700: #161625;
+  --color-dark-600: #1e1e32;
+  --color-dark-500: #2a2a40;
+  --color-dark-400: #3a3a55;
+  --color-dark-300: #5a5a78;
+  --color-dark-200: #8a8aa5;
+  --color-dark-100: #b5b5cc;
+
+  --color-neon-green: #00e676;
+  --color-neon-lime: #76ff03;
+  --color-electric-blue: #448aff;
+  --color-accent-cyan: #00e5ff;
+  --color-accent-purple: #b388ff;
+  --color-accent-orange: #ff9100;
+  --color-error-red: #ff5252;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ===== Base Styles ===== */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-dark-950);
+  color: #e8e8f0;
+  overflow: hidden;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-dark-500);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-400);
+}
+
+/* ===== Glassmorphism ===== */
+.glass {
+  background: rgba(15, 15, 26, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ===== Message Animations ===== */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 230, 118, 0.15); }
+  50% { box-shadow: 0 0 35px rgba(0, 230, 118, 0.3); }
+}
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-slide-right {
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-fade-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-slide-down {
+  animation: slideInDown 0.3s ease-out forwards;
+}
+
+/* ===== Typing Indicator ===== */
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-neon-green);
+  border-radius: 50%;
+  animation: dotBounce 1.4s infinite ease-in-out;
+}
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ===== Neon Glow Effects ===== */
+.glow-green {
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.2), 0 0 60px rgba(0, 230, 118, 0.05);
+}
+.glow-blue {
+  box-shadow: 0 0 20px rgba(68, 138, 255, 0.2), 0 0 60px rgba(68, 138, 255, 0.05);
+}
+
+/* ===== Sidebar ===== */
+.sidebar-item {
+  transition: all 0.2s ease;
+}
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+.sidebar-item.active {
+  background: linear-gradient(90deg, rgba(0, 230, 118, 0.1), transparent);
+  border-left: 3px solid var(--color-neon-green);
+}
+
+/* ===== Quick Action Buttons ===== */
+.quick-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.quick-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 230, 118, 0.15);
+}
+.quick-btn:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+/* ===== Workout Card ===== */
+.workout-card {
+  background: linear-gradient(135deg, rgba(0, 230, 118, 0.06), rgba(68, 138, 255, 0.04));
+  border: 1px solid rgba(0, 230, 118, 0.12);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+.workout-card:hover {
+  border-color: rgba(0, 230, 118, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 230, 118, 0.08);
+}
+
+/* ===== Badge ===== */
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-beginner {
+  background: rgba(0, 230, 118, 0.15);
+  color: var(--color-neon-green);
+}
+.badge-intermediate {
+  background: rgba(68, 138, 255, 0.15);
+  color: var(--color-electric-blue);
+}
+.badge-advanced {
+  background: rgba(255, 82, 82, 0.15);
+  color: var(--color-error-red);
+}
+
+/* ===== Send Button Pulse ===== */
+.send-btn {
+  transition: all 0.2s ease;
+}
+.send-btn:hover:not(:disabled) {
+  animation: pulseGlow 2s infinite;
+  transform: scale(1.05);
+}
+.send-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ===== Mobile Overlay ===== */
+.sidebar-overlay {
+  transition: opacity 0.3s ease;
+}
+
+/* ===== Bot avatar gradient ===== */
+.bot-avatar {
+  background: linear-gradient(135deg, var(--color-neon-green), var(--color-electric-blue));
+}
+
+/* ===== Markdown-like content in bot messages ===== */
+.bot-content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-neon-green);
+  margin: 12px 0 6px 0;
+}
+.bot-content h3:first-child {
+  margin-top: 0;
+}
+.bot-content ul, .bot-content ol {
+  padding-left: 18px;
+  margin: 6px 0;
+}
+.bot-content li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.bot-content strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+.bot-content p {
+  margin: 6px 0;
+  line-height: 1.6;
+}
+.bot-content em {
+  color: var(--color-dark-200);
+}

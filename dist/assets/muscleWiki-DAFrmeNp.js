@@ -1,0 +1,32 @@
+import{t as e}from"./modulepreload-polyfill-myak50gs.js";e((()=>{document.addEventListener(`DOMContentLoaded`,()=>{let e=document.getElementById(`themeBtn`),t=document.getElementById(`themeSun`),n=document.getElementById(`themeMoon`),r=document.getElementById(`langToggle`),i=Array.from(document.querySelectorAll(`.muscle-btn`)),a=document.getElementById(`siteTitle`),o=document.getElementById(`heroTitle`),s=document.getElementById(`heroDesc`),c=document.getElementById(`selectedTitleText`),l=document.getElementById(`panelLabel`),u=document.querySelector(`.panel__title-icon`),d=document.getElementById(`videos`),f={Chest:[{id:`a9vL6BsgkPg`,title:`Bench Press — Chest Builder`},{id:`fGm-ef-4PVk`,title:`Incline Dumbbell Press`}],Back:[{id:`jLvqKgW-_G8`,title:`Barbell Row — Back Thickness`},{id:`2eA2Koq6pTI`,title:`Lat Pulldown`}],Biceps:[{id:`ykJmrZ5v0Oo`,title:`Barbell Curl — Biceps Peak`}],Triceps:[{id:`2-LAMcpzODU`,title:`Triceps Pushdown`}],Shoulders:[{id:`SgyUoY0IZ7A`,title:`Overhead Press — Shoulders`}],Legs:[{id:`8zWDuWKdBZU`,title:`Barbell Squat — Legs`}],Abs:[{id:`ad4zfM2ioD8`,title:`Ab Crunch — Core`}]},p={en:{siteTitle:`Muscle Wiki`,heroTitle:`Muscle Wiki`,heroDesc:`Interactive muscle wiki & exercise videos.`,selectedNone:`None`,selectedPrefix:``,backToFitify:`Back to Fitify`,emptyText:`Choose a muscle group to see exercises`,panelLabel:`Selected Muscle`,watchYT:`Watch on YouTube`,exercise:`Exercise`},ar:{siteTitle:`ويكي عضلات`,heroTitle:`ويكي العضلات`,heroDesc:`ويكي عضلي تفاعلي وفيديوهات تمارين.`,selectedNone:`لا شيء`,selectedPrefix:``,backToFitify:`العودة إلى فيتيفاي`,emptyText:`اختر مجموعة عضلية لعرض التمارين`,panelLabel:`العضلة المحددة`,watchYT:`شاهد على يوتيوب`,exercise:`تمرين`}},m=localStorage.getItem(`fitify_theme`)||(window.matchMedia?.(`(prefers-color-scheme: dark)`).matches?`dark`:`light`),h=localStorage.getItem(`fitify_lang`)||`en`,g=null;_(),v(),S();function _(){m===`dark`?(document.documentElement.removeAttribute(`data-theme`),t.style.display=`block`,n.style.display=`none`):(document.documentElement.setAttribute(`data-theme`,`light`),t.style.display=`none`,n.style.display=`block`),localStorage.setItem(`fitify_theme`,m)}function v(){let e=p[h];a.textContent=e.siteTitle,o.textContent=e.heroTitle,s.textContent=e.heroDesc,l.textContent=e.panelLabel;let t=document.getElementById(`backBtnText`);t&&(t.textContent=e.backToFitify);let n=document.getElementById(`emptyText`);if(n&&(n.textContent=e.emptyText),i.forEach(e=>{let t=e.querySelector(`.muscle-btn__label`);t&&(t.textContent=h===`en`?e.dataset.en:e.dataset.ar)}),g){let e=i.find(e=>e.dataset.en===g);e&&(c.textContent=h===`en`?e.dataset.en:e.dataset.ar)}else c.textContent=e.selectedNone;r.checked=h===`ar`,document.documentElement.dir=h===`ar`?`rtl`:`ltr`,localStorage.setItem(`fitify_lang`,h)}function y(e){let t=f[e]||[];if(!t.length){d.innerHTML=`
+        <div class="videos__empty">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.35">
+            <polygon points="23 7 16 12 23 17 23 7"/>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+          <p>No exercises available</p>
+        </div>`;return}d.innerHTML=t.map((e,t)=>{let n=`https://img.youtube.com/vi/${e.id}/hqdefault.jpg`,r=`https://www.youtube.com/watch?v=${e.id}`;return`
+        <div class="video-card" style="animation-delay:${t*.07}s" data-video-id="${e.id}">
+          <div class="video-card__thumb">
+            <img src="${n}" alt="${e.title}" loading="lazy" />
+            <div class="video-card__play">
+              <div class="video-card__play-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              </div>
+            </div>
+            <div class="video-card__info">
+              <div class="video-card__name">${e.title}</div>
+            </div>
+          </div>
+          <div class="video-card__body">
+            <span class="video-card__meta">${p[h].exercise} ${t+1}</span>
+            <a href="${r}" target="_blank" rel="noopener" class="video-card__cta" onclick="event.stopPropagation()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.45.029 5.804 0 12c.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 4-8 4z"/></svg>
+              ${p[h].watchYT}
+            </a>
+          </div>
+        </div>`}).join(``),d.querySelectorAll(`.video-card`).forEach(e=>{e.addEventListener(`click`,()=>b(e.dataset.videoId))})}function b(e){let t=document.querySelector(`.video-modal`);t||(t=document.createElement(`div`),t.className=`video-modal`,t.innerHTML=`
+        <div class="video-modal__inner">
+          <button class="video-modal__close" aria-label="Close">&times;</button>
+          <iframe allowfullscreen></iframe>
+        </div>`,document.body.appendChild(t),t.addEventListener(`click`,e=>{(e.target===t||e.target.closest(`.video-modal__close`))&&x()}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&x()}));let n=t.querySelector(`iframe`);n.src=`https://www.youtube.com/embed/${e}?autoplay=1`,requestAnimationFrame(()=>t.classList.add(`open`))}function x(){let e=document.querySelector(`.video-modal`);e&&(e.classList.remove(`open`),setTimeout(()=>{let t=e.querySelector(`iframe`);t&&(t.src=``)},300))}function S(){e.addEventListener(`click`,()=>{m=m===`dark`?`light`:`dark`,_()}),r.addEventListener(`change`,()=>{h=r.checked?`ar`:`en`,a.classList.add(`fade`),setTimeout(()=>{v(),g&&y(g),a.classList.remove(`fade`)},200)}),i.forEach(e=>{e.addEventListener(`click`,()=>{i.forEach(e=>e.classList.remove(`active`)),e.classList.add(`active`),g=e.dataset.en,c.textContent=h===`en`?e.dataset.en:e.dataset.ar,l.classList.add(`visible`),u.classList.add(`visible`),y(g)}),e.addEventListener(`mousemove`,t=>{let n=e.getBoundingClientRect();e.style.setProperty(`--x`,(t.clientX-n.left)/n.width*100+`%`),e.style.setProperty(`--y`,(t.clientY-n.top)/n.height*100+`%`)})})}})}))();
